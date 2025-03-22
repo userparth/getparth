@@ -18,6 +18,70 @@ function showToast(message) {
 	setTimeout(() => toast.remove(), 3000);
 }
 
+// ✅ STEP 1: GitHub Contributions Heatmap Embed (Modified)
+
+const heatmapScript = document.createElement("script");
+heatmapScript.src =
+	"https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js";
+document.body.appendChild(heatmapScript);
+
+const heatmapStylesheet = document.createElement("link");
+heatmapStylesheet.rel = "stylesheet";
+heatmapStylesheet.href =
+	"https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css";
+document.head.appendChild(heatmapStylesheet);
+
+// Inject calendar container directly after GitHub heading
+// and remove summary section after heatmap renders
+
+document.addEventListener("DOMContentLoaded", function () {
+	const githubHeading = document.querySelector("#github-projects h2");
+
+	const calendarWrapper = document.createElement("div");
+	calendarWrapper.className = "github-calendar-wrapper";
+
+	const calendarDiv = document.createElement("div");
+	calendarDiv.className = "calendar";
+	calendarDiv.textContent = "Loading GitHub activity...";
+
+	calendarWrapper.appendChild(calendarDiv);
+
+	if (githubHeading && githubHeading.parentNode) {
+		githubHeading.parentNode.insertBefore(
+			calendarWrapper,
+			githubHeading.nextSibling
+		);
+
+		const interval = setInterval(() => {
+			if (typeof GitHubCalendar !== "undefined") {
+				GitHubCalendar(".calendar", "userparth", { responsive: true });
+				clearInterval(interval);
+
+				setTimeout(() => {
+					// Remove summary footer if it appears
+					document
+						.querySelectorAll(".calendar .contrib-column")
+						.forEach((el) => el.remove());
+
+					// Auto-scroll to latest date block
+					const scrollWrapper = document.querySelector(
+						".calendar [style*='overflow-x: auto']"
+					);
+					if (scrollWrapper) {
+						scrollWrapper.scrollLeft = scrollWrapper.scrollWidth;
+					}
+				}, 20);
+			}
+		}, 10);
+	}
+
+	const menuToggle = document.getElementById("hamburger-menu");
+	const navLinks = document.querySelector(".nav-links");
+	menuToggle.addEventListener("click", function () {
+		navLinks.classList.toggle("show");
+	});
+});
+
 // Apply Dark Mode Styles to GitHub Cards
 function applyDarkModeToGitHubCards() {
 	const isDarkMode = document.body.classList.contains("dark-mode");
@@ -27,18 +91,6 @@ function applyDarkModeToGitHubCards() {
 		card.style.borderColor = isDarkMode ? "#444" : "#ccc";
 	});
 }
-
-// Ensure GitHub Projects Update on Dark Mode Toggle
-document
-	.getElementById("dark-mode-toggle")
-	.addEventListener("click", function () {
-		document.body.classList.toggle("dark-mode");
-		localStorage.setItem(
-			"dark-mode",
-			document.body.classList.contains("dark-mode") ? "enabled" : "disabled"
-		);
-		applyDarkModeToGitHubCards();
-	});
 
 function setupGitHubProjects() {
 	const githubUsername = "userparth";
@@ -190,11 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			navLinks.classList.remove("show");
 		});
 	});
-	// Toggle dark mode (button)
-	// darkModeToggle.addEventListener("click", function () {
-	// 	const enabled = document.body.classList.toggle("dark-mode");
-	// 	localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
-	// });
 
 	// Hamburger Menu Toggle
 	menuToggle.addEventListener("click", function () {
