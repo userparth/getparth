@@ -143,6 +143,11 @@ function setupGitHubProjects() {
 document.addEventListener("DOMContentLoaded", function () {
 	const darkModeToggle = document.getElementById("dark-mode-toggle");
 
+	// Load dark mode preference
+	if (localStorage.getItem("dark-mode") === "enabled") {
+		document.body.classList.add("dark-mode");
+	}
+
 	function updateDarkModeUI(enabled) {
 		document.body.classList.toggle("dark-mode", enabled);
 		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
@@ -185,17 +190,11 @@ document.addEventListener("DOMContentLoaded", function () {
 			navLinks.classList.remove("show");
 		});
 	});
-
-	// Load dark mode preference
-	if (localStorage.getItem("dark-mode") === "enabled") {
-		document.body.classList.add("dark-mode");
-	}
-
 	// Toggle dark mode (button)
-	darkModeToggle.addEventListener("click", function () {
-		const enabled = document.body.classList.toggle("dark-mode");
-		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
-	});
+	// darkModeToggle.addEventListener("click", function () {
+	// 	const enabled = document.body.classList.toggle("dark-mode");
+	// 	localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
+	// });
 
 	// Hamburger Menu Toggle
 	menuToggle.addEventListener("click", function () {
