@@ -192,12 +192,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		darkModeToggle.textContent = "Light Mode";
 	}
 
-	// // Toggle dark mode (button)
-	// darkModeToggle.addEventListener("click", function () {
-	// 	const enabled = document.body.classList.toggle("dark-mode");
-	// 	localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
-	// 	darkModeToggle.textContent = enabled ? "Light Mode" : "Dark Mode";
-	// });
+	// Toggle dark mode (button)
+	darkModeToggle.addEventListener("click", function () {
+		const enabled = document.body.classList.toggle("dark-mode");
+		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
+	});
 
 	// // Toggle dark mode (keyboard: D key)
 	// document.addEventListener("keydown", function (event) {
