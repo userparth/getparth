@@ -189,7 +189,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	// Load dark mode preference
 	if (localStorage.getItem("dark-mode") === "enabled") {
 		document.body.classList.add("dark-mode");
-		darkModeToggle.textContent = "Light Mode";
 	}
 
 	// Toggle dark mode (button)
@@ -197,17 +196,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		const enabled = document.body.classList.toggle("dark-mode");
 		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
 	});
-
-	// // Toggle dark mode (keyboard: D key)
-	// document.addEventListener("keydown", function (event) {
-	// 	if (event.key.toLowerCase() === "d") {
-	// 		const enabled = document.body.classList.toggle("dark-mode");
-	// 		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
-	// 		if (darkModeToggle) {
-	// 			darkModeToggle.textContent = enabled ? "Light Mode" : "Dark Mode";
-	// 		}
-	// 	}
-	// });
 
 	// Hamburger Menu Toggle
 	menuToggle.addEventListener("click", function () {
