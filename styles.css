@@ -113,7 +113,7 @@ header {
 	gap: 24px;
 }
 
-.hero-nav-links {
+.nav-links {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 24px;
@@ -122,14 +122,14 @@ header {
 	padding: 0;
 }
 
-.hero-nav-links li a {
+.nav-links li a {
 	color: #333;
 	font-weight: 500;
 	text-decoration: none;
 	transition: color 0.2s;
 }
 
-.hero-nav-links li a:hover {
+.nav-links li a:hover {
 	color: #0d6efd;
 }
 
@@ -138,16 +138,16 @@ body.dark-mode .hero-nav {
 	box-shadow: 0 2px 10px rgba(255, 255, 255, 0.04);
 }
 
-body.dark-mode .hero-nav-links li a {
+body.dark-mode .nav-links li a {
 	color: #ccc;
 }
 
-body.dark-mode .hero-nav-links li a:hover {
+body.dark-mode .nav-links li a:hover {
 	color: #4dabf7;
 }
 
 /* Increase font size for desktop menu */
-.hero-nav-links li a {
+.nav-links li a {
 	font-size: 18px; /* was 16px */
 	padding: 10px 14px;
 }
@@ -160,7 +160,7 @@ body.dark-mode .hero-nav-links li a:hover {
 		position: relative;
 	}
 
-	.hero-nav-links {
+	.nav-links {
 		display: none;
 		position: absolute;
 		top: 100%;
@@ -175,22 +175,22 @@ body.dark-mode .hero-nav-links li a:hover {
 		border-radius: 8px;
 	}
 
-	.hero-nav-links.show {
+	.nav-links.show {
 		display: flex;
 	}
 
-	.hero-nav-links li a {
+	.nav-links li a {
 		color: #333;
 		padding: 8px 12px;
 		display: block;
 	}
 
-	body.dark-mode .hero-nav-links {
+	body.dark-mode .nav-links {
 		background: #222;
 		border-color: #444;
 	}
 
-	body.dark-mode .hero-nav-links li a {
+	body.dark-mode .nav-links li a {
 		color: #ccc;
 	}
 
@@ -619,4 +619,19 @@ body.dark-mode .timeline-content {
 	.timeline-dot {
 		left: -27px;
 	}
+}
+
+/* ✅ Dark Mode Fix for .nav-links (mobile menu) */
+body.dark-mode .nav-links {
+	background: #1a1a1a !important;
+	border-color: #444 !important;
+}
+
+body.dark-mode .nav-links a {
+	color: #eee !important;
+}
+
+body.dark-mode .nav-links a:hover {
+	background: #333 !important;
+	color: #fff !important;
 }

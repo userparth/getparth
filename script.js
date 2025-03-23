@@ -31,57 +31,6 @@ heatmapStylesheet.href =
 	"https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css";
 document.head.appendChild(heatmapStylesheet);
 
-// Inject calendar container directly after GitHub heading
-// and remove summary section after heatmap renders
-
-document.addEventListener("DOMContentLoaded", function () {
-	const githubHeading = document.querySelector("#github-projects h2");
-
-	const calendarWrapper = document.createElement("div");
-	calendarWrapper.className = "github-calendar-wrapper";
-
-	const calendarDiv = document.createElement("div");
-	calendarDiv.className = "calendar";
-	calendarDiv.textContent = "Loading GitHub activity...";
-
-	calendarWrapper.appendChild(calendarDiv);
-
-	if (githubHeading && githubHeading.parentNode) {
-		githubHeading.parentNode.insertBefore(
-			calendarWrapper,
-			githubHeading.nextSibling
-		);
-
-		const interval = setInterval(() => {
-			if (typeof GitHubCalendar !== "undefined") {
-				GitHubCalendar(".calendar", "userparth", { responsive: true });
-				clearInterval(interval);
-
-				setTimeout(() => {
-					// Remove summary footer if it appears
-					document
-						.querySelectorAll(".calendar .contrib-column")
-						.forEach((el) => el.remove());
-
-					// Auto-scroll to latest date block
-					const scrollWrapper = document.querySelector(
-						".calendar [style*='overflow-x: auto']"
-					);
-					if (scrollWrapper) {
-						scrollWrapper.scrollLeft = scrollWrapper.scrollWidth;
-					}
-				}, 20);
-			}
-		}, 10);
-	}
-
-	const menuToggle = document.getElementById("hamburger-menu");
-	const navLinks = document.querySelector(".nav-links");
-	menuToggle.addEventListener("click", function () {
-		navLinks.classList.toggle("show");
-	});
-});
-
 // Apply Dark Mode Styles to GitHub Cards
 function applyDarkModeToGitHubCards() {
 	const isDarkMode = document.body.classList.contains("dark-mode");
@@ -191,110 +140,6 @@ function setupGitHubProjects() {
 		});
 }
 
-// Initialize after DOM is ready
-document.addEventListener("DOMContentLoaded", function () {
-	const darkModeToggle = document.getElementById("dark-mode-toggle");
-
-	// Load dark mode preference
-	if (localStorage.getItem("dark-mode") === "enabled") {
-		document.body.classList.add("dark-mode");
-	}
-
-	function updateDarkModeUI(enabled) {
-		document.body.classList.toggle("dark-mode", enabled);
-		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
-
-		// Optional: animated emoji toggle
-		darkModeToggle.textContent = enabled ? "🌞" : "🌙";
-
-		// Update GitHub card styles if they exist
-		document.querySelectorAll(".github-card").forEach((card) => {
-			card.style.background = enabled ? "#222" : "#f5f5f5";
-			card.style.color = enabled ? "white" : "#333";
-			card.style.borderColor = enabled ? "#444" : "#ccc";
-		});
-	}
-
-	// Load preference on first load
-	const savedDarkMode = localStorage.getItem("dark-mode") === "enabled";
-	updateDarkModeUI(savedDarkMode);
-
-	// Toggle on click
-	darkModeToggle.addEventListener("click", () => {
-		const isDark = document.body.classList.contains("dark-mode");
-		updateDarkModeUI(!isDark);
-	});
-
-	// Optionally keep this D-key toggle
-	document.addEventListener("keydown", function (event) {
-		if (event.key.toLowerCase() === "d") {
-			const isDark = document.body.classList.contains("dark-mode");
-			updateDarkModeUI(!isDark);
-		}
-	});
-
-	const menuToggle = document.getElementById("hamburger-menu");
-	const navLinks = document.querySelector(".nav-links");
-
-	// Nav Links: auto close on click (for mobile)
-	document.querySelectorAll(".nav-links a").forEach((link) => {
-		link.addEventListener("click", () => {
-			navLinks.classList.remove("show");
-		});
-	});
-
-	// Hamburger Menu Toggle
-	menuToggle.addEventListener("click", function () {
-		navLinks.classList.toggle("show");
-	});
-
-	// Close mobile nav when clicking outside
-	document.addEventListener("click", function (event) {
-		if (
-			!menuToggle.contains(event.target) &&
-			!navLinks.contains(event.target)
-		) {
-			navLinks.classList.remove("show");
-		}
-	});
-
-	const resumeBtn = document.querySelector(".resume-btn");
-	const modal = document.getElementById("resume-modal");
-	const closeModal = document.querySelector(".modal-close");
-
-	if (resumeBtn && modal && closeModal) {
-		resumeBtn.addEventListener("click", (e) => {
-			e.preventDefault();
-			modal.classList.add("show");
-		});
-
-		closeModal.addEventListener("click", () => {
-			modal.classList.remove("show");
-		});
-
-		window.addEventListener("keydown", (e) => {
-			if (e.key === "Escape") modal.classList.remove("show");
-		});
-
-		modal.addEventListener("click", (e) => {
-			if (e.target === modal) modal.classList.remove("show");
-		});
-	}
-
-	// Enhanced GitHub Projects Grid
-	setupGitHubProjects();
-
-	// Easter Egg: Hover About for Fun Fact
-	const aboutSection = document.getElementById("about");
-	if (aboutSection) {
-		aboutSection.addEventListener("mouseover", function handler() {
-			aboutSection.innerHTML +=
-				"<p class='fun-fact'>Fun Fact: I built my first full-stack application at the age of 16! 🚀</p>";
-			aboutSection.removeEventListener("mouseover", handler);
-		});
-	}
-});
-
 // Easter Egg: Profile Click
 const profileImg = document.getElementById("profile-img");
 if (profileImg) {
@@ -334,3 +179,137 @@ console.log(
 	"%cYou found a hidden message! 🚀 Want to collaborate? Reach out at userparth@gmail.com!",
 	"color: cyan; font-size: 16px;"
 );
+
+document.addEventListener("DOMContentLoaded", function () {
+	// Smooth Scroll
+	document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+		anchor.addEventListener("click", function (e) {
+			e.preventDefault();
+			const targetElement = document.querySelector(this.getAttribute("href"));
+			if (targetElement) {
+				targetElement.scrollIntoView({ behavior: "smooth" });
+			}
+		});
+	});
+
+	const darkModeToggle = document.getElementById("dark-mode-toggle");
+	if (localStorage.getItem("dark-mode") === "enabled") {
+		document.body.classList.add("dark-mode");
+	}
+
+	function updateDarkModeUI(enabled) {
+		document.body.classList.toggle("dark-mode", enabled);
+		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
+		darkModeToggle.textContent = enabled ? "🌞" : "🌙";
+		document.querySelectorAll(".github-card").forEach((card) => {
+			card.style.background = enabled ? "#222" : "#f5f5f5";
+			card.style.color = enabled ? "white" : "#333";
+			card.style.borderColor = enabled ? "#444" : "#ccc";
+		});
+	}
+
+	const savedDarkMode = localStorage.getItem("dark-mode") === "enabled";
+	updateDarkModeUI(savedDarkMode);
+
+	darkModeToggle.addEventListener("click", () => {
+		const isDark = document.body.classList.contains("dark-mode");
+		updateDarkModeUI(!isDark);
+	});
+
+	document.addEventListener("keydown", function (event) {
+		if (event.key.toLowerCase() === "d") {
+			const isDark = document.body.classList.contains("dark-mode");
+			updateDarkModeUI(!isDark);
+		}
+	});
+
+	const menuToggle = document.getElementById("hamburger-menu");
+	const navLinks = document.querySelector(".nav-links");
+
+	document.querySelectorAll(".nav-links a").forEach((link) => {
+		link.addEventListener("click", () => {
+			navLinks.classList.remove("show");
+		});
+	});
+
+	menuToggle.addEventListener("click", function () {
+		navLinks.classList.toggle("show");
+	});
+
+	document.addEventListener("click", function (event) {
+		if (
+			!menuToggle.contains(event.target) &&
+			!navLinks.contains(event.target)
+		) {
+			navLinks.classList.remove("show");
+		}
+	});
+
+	const resumeBtns = document.querySelectorAll(".resume-btn");
+	const modal = document.getElementById("resume-modal");
+	const closeModal = document.querySelector(".modal-close");
+
+	if (resumeBtns.length && modal && closeModal) {
+		resumeBtns[0].addEventListener("click", (e) => {
+			e.preventDefault();
+			modal.classList.add("show");
+		});
+
+		closeModal.addEventListener("click", () => modal.classList.remove("show"));
+
+		window.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") modal.classList.remove("show");
+		});
+
+		modal.addEventListener("click", (e) => {
+			if (e.target === modal) modal.classList.remove("show");
+		});
+	}
+
+	setupGitHubProjects();
+
+	const aboutSection = document.getElementById("about");
+	if (aboutSection) {
+		aboutSection.addEventListener("mouseover", function handler() {
+			aboutSection.innerHTML +=
+				"<p class='fun-fact'>Fun Fact: I built my first full-stack application at the age of 16! 🚀</p>";
+			aboutSection.removeEventListener("mouseover", handler);
+		});
+	}
+
+	const githubHeading = document.querySelector("#github-projects h2");
+
+	const calendarWrapper = document.createElement("div");
+	calendarWrapper.className = "github-calendar-wrapper";
+
+	const calendarDiv = document.createElement("div");
+	calendarDiv.className = "calendar";
+	calendarDiv.textContent = "Loading GitHub activity...";
+	calendarWrapper.appendChild(calendarDiv);
+
+	if (githubHeading && githubHeading.parentNode) {
+		githubHeading.parentNode.insertBefore(
+			calendarWrapper,
+			githubHeading.nextSibling
+		);
+
+		const interval = setInterval(() => {
+			if (typeof GitHubCalendar !== "undefined") {
+				GitHubCalendar(".calendar", "userparth", { responsive: true });
+				clearInterval(interval);
+
+				setTimeout(() => {
+					document
+						.querySelectorAll(".calendar .contrib-column")
+						.forEach((el) => el.remove());
+					const scrollWrapper = document.querySelector(
+						".calendar [style*='overflow-x: auto']"
+					);
+					if (scrollWrapper) {
+						scrollWrapper.scrollLeft = scrollWrapper.scrollWidth;
+					}
+				}, 20);
+			}
+		}, 10);
+	}
+});
