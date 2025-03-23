@@ -48,30 +48,41 @@
         </div>
     </div>
 
-    <header>
-        <div class="container">
-            <h1>Parth Sharma</h1>
-            <p>Associate Engineering Head</p>
-            <img id="profile-img" src="profile.jpg" alt="Parth Sharma - Software Engineer and Technology Leader"
-                loading="lazy">
+    <!-- Hero Section with Dots Background -->
+    <header class="hero-section">
+        <div class="hero-scene">
+            <div class="ct-container">
+                <span class="item-1">
+                    <img src="https://creativethemes.com/blocksy/wp-content/uploads/2019/07/dots-title-left.svg"
+                        alt="dots-left">
+                </span>
+                <span class="item-2">
+                    <img src="https://creativethemes.com/blocksy/wp-content/uploads/2019/07/circle-dots-big.svg"
+                        alt="dots-right">
+                </span>
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Parth Sharma</h1>
+            <p class="hero-subtitle">Associate Engineering Manager</p>
+            <img id="profile-img" src="profile.jpg" alt="Profile Picture of Parth Sharma" loading="lazy">
         </div>
     </header>
 
-    <nav>
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="#about" title="About Me" aria-label="About Me">About</a></li>
-                <li><a href="#education" title="My Education" aria-label="My Education">Education</a></li>
-                <li><a href="#experience" title="Professional Experience"
-                        aria-label="Professional Experience">Experience</a></li>
-                <li><a href="#github-projects" title="GitHub Projects" aria-label="GitHub Projects">Projects</a></li>
-                <li><a href="#resume" title="Download Resume" aria-label="Download Resume">Resume</a></li>
-            </ul>
-            <button class="hamburger" id="hamburger-menu" title="Menu" aria-label="Open Navigation Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            <button id="dark-mode-toggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode">🌙</button>
-        </div>
+    <!-- Navbar -->
+    <nav class="hero-nav">
+        <ul class="nav-links nav-links">
+            <li><a href="#about" title="About Me" aria-label="About Me">About</a></li>
+            <li><a href="#education" title="My Education" aria-label="My Education">Education</a></li>
+            <li><a href="#experience" title="Professional Experience"
+                    aria-label="Professional Experience">Experience</a></li>
+            <li><a href="#github-projects" title="GitHub Projects" aria-label="GitHub Projects">Projects</a></li>
+            <li><a href="#resume" title="Resume" aria-label="Download Resume">Resume</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger-menu" title="Menu" aria-label="Open Navigation Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button id="dark-mode-toggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode">🌙</button>
     </nav>
 
     <section id="about">
@@ -92,29 +103,50 @@
 
     <section id="experience">
         <h2>Professional Experience - <span id="experience-counter"></span></h2>
-        <ul>
-            <li>
-                <h3>HexaHealth (Vianam HealthTech Pvt. Ltd.)</h3>
-                <ul>
-                    <li>Associate Engineering Head (Oct 2024 - Present)</li>
-                    <li>Technical Lead Engineer (Oct 2022 - Sept 2024)</li>
-                    <li>Senior Full Stack Engineer (Dec 2021 - Sept 2022)</li>
-                </ul>
-            </li>
-            <li>
-                <h3>Freelance</h3>
-                <ul>
-                    <li>Full-Stack Developer (Jun 2020 - Dec 2021)</li>
-                </ul>
-            </li>
-            <li>
-                <h3>ArrayStack Technologies Pvt. Ltd.</h3>
-                <ul>
-                    <li>Back-End Developer (Apr 2018 - Apr 2020)</li>
-                    <li>Android Developer (Jul 2017 - Mar 2018)</li>
-                </ul>
-            </li>
-        </ul>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>HexaHealth (Vianam HealthTech Pvt. Ltd.)</h3>
+                    <span>
+                        <ul>
+                            <li>Associate Engineering Head (Oct 2024 - Present)</li>
+                            <li>Technical Lead Engineer (Oct 2022 - Sept 2024)</li>
+                            <li>Senior Full Stack Engineer (Dec 2021 - Sept 2022)</li>
+                        </ul>
+                    </span>
+                    <p>Developed custom NLP pipelines, trained transformers, and optimized inference workflows using
+                        PyTorch and HuggingFace.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Freelance</h3>
+                    <span>
+                        <ul>
+                            <li>Full-Stack Developer (Jun 2020 - Dec 2021)</li>
+                        </ul>
+                    </span>
+                    <p>Built scalable MERN stack applications with real-time chat, role-based access, and responsive
+                        UI/UX for 3 clients.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>ArrayStack Technologies Pvt. Ltd.</h3>
+                    <span>
+                        <ul>
+                            <li>Back-End Developer (Apr 2018 - Apr 2020)</li>
+                            <li>Android Developer (Jul 2017 - Mar 2018)</li>
+                        </ul>
+                    </span>
+                    <p>Graduating with a strong foundation in algorithms, system design, and machine learning. Built
+                        projects in AI and data analytics.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="github-projects">

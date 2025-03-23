@@ -34,6 +34,173 @@ header {
 	text-align: center;
 }
 
+/* 🌟 Hero Section Styles */
+.hero-section {
+	position: relative;
+	background: #0e6efd;
+	color: white;
+	text-align: center;
+	padding: 120px 20px 60px;
+	overflow: hidden;
+}
+
+.hero-title {
+	font-size: 48px;
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+
+.hero-subtitle {
+	font-size: 20px;
+	font-weight: 400;
+	opacity: 0.9;
+}
+
+.hero-content {
+	position: relative;
+	z-index: 1;
+}
+
+.hero-nav {
+	z-index: 2;
+}
+
+/* 🎨 Dots Background Scene */
+.hero-scene {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	z-index: 0;
+}
+
+.ct-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.hero-scene .item-1,
+.hero-scene .item-2 {
+	position: absolute;
+	z-index: 1;
+	opacity: 0.4;
+}
+
+.hero-scene .item-1 {
+	top: 20%;
+	left: 10%;
+	width: 150px;
+}
+
+.hero-scene .item-2 {
+	bottom: 15%;
+	right: 8%;
+	width: 220px;
+}
+
+/* 🧭 Hero Navigation */
+.hero-nav {
+	display: flex;
+	justify-content: center;
+	background: white;
+	padding: 12px 20px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+	position: relative;
+	z-index: 2;
+	gap: 24px;
+}
+
+.nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.nav-links li a {
+	color: #333;
+	font-weight: 500;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+	color: #0d6efd;
+}
+
+body.dark-mode .hero-nav {
+	background: #1e1e1e;
+	box-shadow: 0 2px 10px rgba(255, 255, 255, 0.04);
+}
+
+body.dark-mode .nav-links li a {
+	color: #ccc;
+}
+
+body.dark-mode .nav-links li a:hover {
+	color: #4dabf7;
+}
+
+/* Increase font size for desktop menu */
+.nav-links li a {
+	font-size: 18px; /* was 16px */
+	padding: 10px 14px;
+}
+
+/* Responsive Mobile Fix */
+@media (max-width: 768px) {
+	.hero-nav {
+		flex-direction: column;
+		align-items: flex-end;
+		position: relative;
+	}
+
+	.nav-links {
+		display: none;
+		position: absolute;
+		top: 100%;
+		right: 10px;
+		background: white;
+		border: 1px solid #ccc;
+		flex-direction: column;
+		gap: 10px;
+		padding: 10px 20px;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		z-index: 1000;
+		border-radius: 8px;
+	}
+
+	.nav-links.show {
+		display: flex;
+	}
+
+	.nav-links li a {
+		color: #333;
+		padding: 8px 12px;
+		display: block;
+	}
+
+	body.dark-mode .nav-links {
+		background: #222;
+		border-color: #444;
+	}
+
+	body.dark-mode .nav-links li a {
+		color: #ccc;
+	}
+
+	/* Ensure hamburger is visible */
+	.hamburger {
+		display: block;
+		margin: 10px;
+	}
+}
+
 #profile-img {
 	width: 120px;
 	height: 120px;
@@ -320,4 +487,151 @@ body.dark-mode #dark-mode-toggle {
 	.hamburger {
 		display: block;
 	}
+}
+
+/* 🧱 Base wrapper for GitHub heatmap */
+.github-calendar-wrapper {
+	background-color: var(--calendar-bg, #ffffff);
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+	margin: 30px 0;
+	overflow-x: auto;
+	transition: background 0.3s ease-in-out;
+}
+
+/* 🌓 Dark Mode Support */
+body.dark-mode .github-calendar-wrapper {
+	--calendar-bg: #161b22;
+}
+
+/* 🧠 Optional tighter .calendar override */
+/* 🧼 Clean up extra height from GitHub Calendar default CSS */
+.calendar {
+	min-height: unset !important;
+	margin-bottom: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+/* 👌 Center it all */
+.calendar text {
+	font-size: 12px !important;
+	fill: var(--calendar-text, #333);
+}
+
+body.dark-mode .calendar text {
+	--calendar-text: #ccc;
+}
+
+/* Optional: Better scale color transition on contribution squares */
+.calendar rect.ContributionCalendar-day {
+	transition: fill 0.3s ease;
+}
+
+/* ✅ Modern Vertical Timeline */
+.timeline {
+	position: relative;
+	margin: 40px 0;
+	padding-left: 30px;
+	border-left: 2px solid var(--timeline-line, #ccc);
+}
+
+body.dark-mode .timeline {
+	--timeline-line: #444;
+}
+
+.timeline-item {
+	position: relative;
+	margin-bottom: 20px;
+	padding-left: 5px;
+	animation: fadeUp 0.6s ease forwards;
+	opacity: 0;
+	transform: translateY(20px);
+}
+
+.timeline-item:nth-child(1) {
+	animation-delay: 0.1s;
+}
+.timeline-item:nth-child(2) {
+	animation-delay: 0.2s;
+}
+.timeline-item:nth-child(3) {
+	animation-delay: 0.3s;
+}
+
+.timeline-dot {
+	position: absolute;
+	left: -27px;
+	top: 8px;
+	width: 12px;
+	height: 12px;
+	background: var(--dot-color, #007bff);
+	border-radius: 50%;
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+body.dark-mode .timeline-dot {
+	--dot-color: #0ea5e9;
+	box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+}
+
+.timeline-content {
+	background: #f9f9f9;
+	padding: 15px 20px;
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+	font-size: 15px;
+}
+
+body.dark-mode .timeline-content {
+	background: #1e1e1e;
+	color: #eee;
+}
+
+/* Subtle Animate In */
+@keyframes fadeUp {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 🧠 Responsive improvement */
+@media (max-width: 600px) {
+	.timeline {
+		padding-left: 20px;
+	}
+
+	.timeline-content {
+		font-size: 14px;
+	}
+}
+
+/* 👇 Default for desktop */
+@media (min-width: 768px) {
+	.timeline-dot {
+		left: -36px;
+	}
+}
+
+/* 👇 Tighter for mobile */
+@media (max-width: 767px) {
+	.timeline-dot {
+		left: -27px;
+	}
+}
+
+/* ✅ Dark Mode Fix for .nav-links (mobile menu) */
+body.dark-mode .nav-links {
+	background: #1a1a1a !important;
+	border-color: #444 !important;
+}
+
+body.dark-mode .nav-links a {
+	color: #eee !important;
+}
+
+body.dark-mode .nav-links a:hover {
+	background: #333 !important;
+	color: #fff !important;
 }
