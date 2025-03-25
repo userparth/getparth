@@ -41,6 +41,55 @@ function applyDarkModeToGitHubCards() {
 	});
 }
 
+function setupNpmPackages() {
+	const username = "userparth";
+	const npmListContainer = document.getElementById("npm-packages-list");
+
+	if (!npmListContainer) return;
+
+	fetch(
+		`https://registry.npmjs.org/-/v1/search?text=maintainer:${username}&size=20`
+	)
+		.then((res) => res.json())
+		.then((data) => {
+			const packages = data.objects;
+
+			if (packages.length === 0) {
+				npmListContainer.innerHTML = "<p>No packages found.</p>";
+				return;
+			}
+
+			const list = document.createElement("div");
+			list.classList.add("projects-grid");
+
+			packages.forEach((pkg) => {
+				const card = document.createElement("a");
+				card.href = `https://www.npmjs.com/package/${pkg.package.name}`;
+				card.target = "_blank";
+				card.classList.add("github-card");
+				card.innerHTML = `
+					<h3 style="margin-bottom: 5px; color: #e83e8c;">${pkg.package.name}</h3>
+					<p style="font-size: 14px; color: #555;">${
+						pkg.package.description || "No description available."
+					}</p>
+					<div style="font-size: 13px; color: #777;">📦 v${
+						pkg.package.version
+					} | ⏱️ Updated: ${new Date(
+					pkg.package.date
+				).toLocaleDateString()}</div>
+				`;
+				list.appendChild(card);
+			});
+
+			npmListContainer.innerHTML = "";
+			npmListContainer.appendChild(list);
+		})
+		.catch((err) => {
+			npmListContainer.innerHTML = "Failed to load NPM packages.";
+			console.error("NPM Fetch Error:", err);
+		});
+}
+
 function setupGitHubProjects() {
 	const githubUsername = "userparth";
 	const projectsList = document.getElementById("projects-list");
@@ -267,6 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	setupGitHubProjects();
+	setupNpmPackages();
 
 	const aboutSection = document.getElementById("about");
 	if (aboutSection) {
