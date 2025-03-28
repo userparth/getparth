@@ -1,14 +1,6 @@
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-	anchor.addEventListener("click", function (e) {
-		e.preventDefault();
-		const targetElement = document.querySelector(this.getAttribute("href"));
-		if (targetElement) {
-			targetElement.scrollIntoView({ behavior: "smooth" });
-		}
-	});
-});
-
+// =========================
+// TOAST NOTIFICATION
+// =========================
 function showToast(message) {
 	const toast = document.createElement("div");
 	toast.textContent = message;
@@ -18,86 +10,43 @@ function showToast(message) {
 	setTimeout(() => toast.remove(), 3000);
 }
 
-// ✅ STEP 1: GitHub Contributions Heatmap Embed (Modified)
-
-const heatmapScript = document.createElement("script");
-heatmapScript.src =
-	"https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js";
-document.body.appendChild(heatmapScript);
-
-const heatmapStylesheet = document.createElement("link");
-heatmapStylesheet.rel = "stylesheet";
-heatmapStylesheet.href =
-	"https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css";
-document.head.appendChild(heatmapStylesheet);
-
-// Apply Dark Mode Styles to GitHub Cards
-function applyDarkModeToGitHubCards() {
-	const isDarkMode = document.body.classList.contains("dark-mode");
-	document.querySelectorAll(".github-card").forEach((card) => {
-		card.style.background = isDarkMode ? "#222" : "#f5f5f5";
-		card.style.color = isDarkMode ? "white" : "#333";
-		card.style.borderColor = isDarkMode ? "#444" : "#ccc";
-	});
-}
-
-function setupNpmPackages() {
-	const username = "userparth";
-	const npmListContainer = document.getElementById("npm-packages-list");
-
-	if (!npmListContainer) return;
-
-	fetch(
-		`https://registry.npmjs.org/-/v1/search?text=maintainer:${username}&size=20`
-	)
-		.then((res) => res.json())
-		.then((data) => {
-			const packages = data.objects;
-
-			if (packages.length === 0) {
-				npmListContainer.innerHTML = "<p>No packages found.</p>";
-				return;
+// =========================
+// LAZY LOAD OBSERVER WRAPPER
+// =========================
+function lazyLoadSection(selector, callback) {
+	const target = document.querySelector(selector);
+	if (!target) return;
+	const observer = new IntersectionObserver((entries, observer) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				callback();
+				observer.disconnect();
 			}
-
-			const list = document.createElement("div");
-			list.classList.add("projects-grid");
-
-			packages.forEach((pkg) => {
-				const card = document.createElement("a");
-				card.href = `https://www.npmjs.com/package/${pkg.package.name}`;
-				card.target = "_blank";
-				card.classList.add("github-card");
-				card.innerHTML = `
-					<h3 style="margin-bottom: 5px; color: #e83e8c;">${pkg.package.name}</h3>
-					<p style="font-size: 14px; color: #555;">${
-						pkg.package.description || "No description available."
-					}</p>
-					<div style="font-size: 13px; color: #777;">📦 v${
-						pkg.package.version
-					} | ⏱️ Updated: ${new Date(
-					pkg.package.date
-				).toLocaleDateString()}</div>
-				`;
-				list.appendChild(card);
-			});
-
-			npmListContainer.innerHTML = "";
-			npmListContainer.appendChild(list);
-		})
-		.catch((err) => {
-			npmListContainer.innerHTML = "Failed to load NPM packages.";
-			console.error("NPM Fetch Error:", err);
 		});
+	});
+	observer.observe(target);
 }
 
+// =========================
+// FETCH WRAPPER
+// =========================
+function fetchData(url, onSuccess, onError) {
+	fetch(url)
+		.then((res) => res.json())
+		.then(onSuccess)
+		.catch(onError);
+}
+
+// =========================
+// GITHUB PROJECTS
+// =========================
 function setupGitHubProjects() {
 	const githubUsername = "userparth";
 	const projectsList = document.getElementById("projects-list");
+	if (!projectsList) return;
 
-	// ✅ Ensure projects container uses grid layout
 	projectsList.classList.add("projects-grid");
 
-	// ✅ Create the filter container
 	const filterContainer = document.createElement("div");
 	filterContainer.classList.add("filter-container");
 	projectsList.before(filterContainer);
@@ -121,49 +70,33 @@ function setupGitHubProjects() {
 			card.href = repo.html_url;
 			card.target = "_blank";
 			card.classList.add("github-card");
-			card.style = `
-                display: block;
-                border: 1px solid #ccc;
-                padding: 15px;
-                border-radius: 8px;
-                background: #f5f5f5;
-                text-decoration: none;
-                color: inherit;
-                transition: transform 0.2s;
-            `;
-			card.onmouseover = () => (card.style.transform = "scale(1.02)");
-			card.onmouseout = () => (card.style.transform = "scale(1)");
-
+			card.setAttribute("aria-label", repo.name);
 			card.innerHTML = `
-                <h3 style="margin: 0 0 5px 0; color: #007bff;">${repo.name}</h3>
-                <p style="margin: 5px 0 10px 0; font-size: 14px; color: #555;">
-                    ${repo.description || "No description provided."}
-                </p>
-                <div style="font-size: 13px; color: #777;">
-                    ⭐ ${repo.stargazers_count} | 🍴 ${
+				<h3 style="margin-bottom: 5px; color: #e83e8c;">${repo.name}</h3>
+				<p style="font-size: 14px; color: #555;">${
+					repo.description || "No description provided."
+				}</p>
+				<div style="font-size: 13px; color: #777;">⭐ ${repo.stargazers_count} | 🍴 ${
 				repo.forks_count
-			} | 📅 Updated: ${new Date(repo.updated_at).toLocaleDateString()}
-                </div>
-            `;
+			} | 📅 Updated: ${new Date(repo.updated_at).toLocaleDateString()}</div>
+			`;
 			projectsList.appendChild(card);
 		});
 	}
 
-	// ✅ Fetch GitHub repos
-	fetch(`https://api.github.com/users/${githubUsername}/repos`)
-		.then((response) => response.json())
-		.then((data) => {
+	fetchData(
+		`https://api.github.com/users/${githubUsername}/repos`,
+		(data) => {
 			allRepos = data;
 			const uniqueLangs = new Set([
 				"All",
-				...data.map((repo) => repo.language).filter(Boolean),
+				...data.map((r) => r.language).filter(Boolean),
 			]);
 
-			// ✅ Create filter buttons dynamically
 			uniqueLangs.forEach((lang) => {
 				const btn = document.createElement("button");
 				btn.textContent = `${lang} (${
-					data.filter((repo) => repo.language === lang).length || data.length
+					data.filter((r) => r.language === lang).length || data.length
 				})`;
 				btn.classList.add("filter-btn");
 				btn.dataset.lang = lang.toLowerCase();
@@ -179,187 +112,199 @@ function setupGitHubProjects() {
 				filterContainer.appendChild(btn);
 			});
 
-			// ✅ Render all projects initially & set "All" as active
 			renderProjects(data);
 			document.querySelector(".filter-btn").classList.add("active");
-		})
-		.catch((error) => {
+		},
+		(error) => {
 			projectsList.innerHTML = "Failed to load projects.";
 			console.error("GitHub Fetch Error:", error);
-		});
+		}
+	);
 }
 
-// Easter Egg: Profile Click
-const profileImg = document.getElementById("profile-img");
-if (profileImg) {
-	profileImg.addEventListener("click", function () {
-		showToast("You found the hidden Easter Egg! 🎉 Keep exploring!");
+// =========================
+// NPM PACKAGES
+// =========================
+function setupNpmPackages() {
+	const username = "userparth";
+	const npmListContainer = document.getElementById("npm-packages-list");
+	if (!npmListContainer) return;
+
+	fetchData(
+		`https://registry.npmjs.org/-/v1/search?text=maintainer:${username}&size=20`,
+		(data) => {
+			const packages = data.objects;
+			if (!packages.length) {
+				npmListContainer.innerHTML = "<p>No packages found.</p>";
+				return;
+			}
+			const list = document.createElement("div");
+			list.classList.add("projects-grid");
+
+			packages.forEach((pkg) => {
+				const card = document.createElement("a");
+				card.href = `https://www.npmjs.com/package/${pkg.package.name}`;
+				card.target = "_blank";
+				card.classList.add("github-card");
+				card.setAttribute("aria-label", pkg.package.name);
+				card.innerHTML = `
+					<h3 style="margin-bottom: 5px; color: #e83e8c;">${pkg.package.name}</h3>
+					<p style="font-size: 14px; color: #555;">${
+						pkg.package.description || "No description available."
+					}</p>
+					<div style="font-size: 13px; color: #777;">📦 v${
+						pkg.package.version
+					} | ⏱️ Updated: ${new Date(
+					pkg.package.date
+				).toLocaleDateString()}</div>
+				`;
+				list.appendChild(card);
+			});
+
+			npmListContainer.innerHTML = "";
+			npmListContainer.appendChild(list);
+		},
+		(err) => {
+			npmListContainer.innerHTML = "Failed to load NPM packages.";
+			console.error("NPM Fetch Error:", err);
+		}
+	);
+}
+
+// =========================
+// RESUME MODAL & UI EVENTS
+// =========================
+document.addEventListener("DOMContentLoaded", () => {
+	document.querySelectorAll("section").forEach((el, i) => {
+		el.classList.add("fade-in-up");
+		el.style.animationDelay = `${i * 0.2}s`;
 	});
-}
 
-// Easter Egg: Konami Code
-let konamiCode = [];
-const konamiSequence = [
-	"ArrowUp",
-	"ArrowUp",
-	"ArrowDown",
-	"ArrowDown",
-	"ArrowLeft",
-	"ArrowRight",
-	"ArrowLeft",
-	"ArrowRight",
-	"b",
-	"a",
-];
-document.addEventListener("keydown", function (event) {
-	konamiCode.push(event.key);
-	if (konamiCode.length > konamiSequence.length) {
-		konamiCode.shift();
-	}
-	if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-		showToast("Konami Code Activated! You are a true explorer! 🚀");
-		document.body.style.backgroundColor = "#000";
-		document.body.style.color = "#0f0";
-	}
-});
-
-// Secret Console Message
-console.log(
-	"%cYou found a hidden message! 🚀 Want to collaborate? Reach out at userparth@gmail.com!",
-	"color: cyan; font-size: 16px;"
-);
-
-document.addEventListener("DOMContentLoaded", function () {
-	// Smooth Scroll
 	document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 		anchor.addEventListener("click", function (e) {
 			e.preventDefault();
-			const targetElement = document.querySelector(this.getAttribute("href"));
-			if (targetElement) {
-				targetElement.scrollIntoView({ behavior: "smooth" });
-			}
+			const target = document.querySelector(this.getAttribute("href"));
+			target?.scrollIntoView({ behavior: "smooth" });
 		});
 	});
 
 	const darkModeToggle = document.getElementById("dark-mode-toggle");
-	if (localStorage.getItem("dark-mode") === "enabled") {
-		document.body.classList.add("dark-mode");
-	}
-
-	function updateDarkModeUI(enabled) {
-		document.body.classList.toggle("dark-mode", enabled);
-		localStorage.setItem("dark-mode", enabled ? "enabled" : "disabled");
-		darkModeToggle.textContent = enabled ? "🌞" : "🌙";
-		document.querySelectorAll(".github-card").forEach((card) => {
-			card.style.background = enabled ? "#222" : "#f5f5f5";
-			card.style.color = enabled ? "white" : "#333";
-			card.style.borderColor = enabled ? "#444" : "#ccc";
+	const savedDark = localStorage.getItem("dark-mode") === "enabled";
+	document.body.classList.toggle("dark-mode", savedDark);
+	if (darkModeToggle) {
+		darkModeToggle.textContent = savedDark ? "🌞" : "🌙";
+		darkModeToggle.addEventListener("click", () => {
+			const isDark = document.body.classList.toggle("dark-mode");
+			localStorage.setItem("dark-mode", isDark ? "enabled" : "disabled");
+			darkModeToggle.textContent = isDark ? "🌞" : "🌙";
+			document.querySelectorAll(".github-card").forEach((card) => {
+				card.style.background = isDark ? "#222" : "#f5f5f5";
+				card.style.color = isDark ? "white" : "#333";
+				card.style.borderColor = isDark ? "#444" : "#ccc";
+			});
 		});
 	}
 
-	const savedDarkMode = localStorage.getItem("dark-mode") === "enabled";
-	updateDarkModeUI(savedDarkMode);
-
-	darkModeToggle.addEventListener("click", () => {
-		const isDark = document.body.classList.contains("dark-mode");
-		updateDarkModeUI(!isDark);
-	});
-
-	document.addEventListener("keydown", function (event) {
-		if (event.key.toLowerCase() === "d") {
-			const isDark = document.body.classList.contains("dark-mode");
-			updateDarkModeUI(!isDark);
-		}
-	});
-
+	// Hamburger toggle
 	const menuToggle = document.getElementById("hamburger-menu");
 	const navLinks = document.querySelector(".nav-links");
-
-	document.querySelectorAll(".nav-links a").forEach((link) => {
-		link.addEventListener("click", () => {
-			navLinks.classList.remove("show");
-		});
-	});
-
-	menuToggle.addEventListener("click", function () {
-		navLinks.classList.toggle("show");
-	});
-
-	document.addEventListener("click", function (event) {
-		if (
-			!menuToggle.contains(event.target) &&
-			!navLinks.contains(event.target)
-		) {
+	menuToggle?.addEventListener("click", () =>
+		navLinks?.classList.toggle("show")
+	);
+	document.addEventListener("click", (e) => {
+		if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
 			navLinks.classList.remove("show");
 		}
 	});
 
-	const resumeBtns = document.querySelectorAll(".resume-btn");
+	// Resume modal
 	const modal = document.getElementById("resume-modal");
 	const closeModal = document.querySelector(".modal-close");
-
-	if (resumeBtns.length && modal && closeModal) {
-		resumeBtns[0].addEventListener("click", (e) => {
+	document.querySelectorAll(".resume-btn").forEach((btn) =>
+		btn.addEventListener("click", (e) => {
 			e.preventDefault();
 			modal.classList.add("show");
-		});
+		})
+	);
+	closeModal?.addEventListener("click", () => modal.classList.remove("show"));
+	window.addEventListener(
+		"keydown",
+		(e) => e.key === "Escape" && modal.classList.remove("show")
+	);
+	modal?.addEventListener(
+		"click",
+		(e) => e.target === modal && modal.classList.remove("show")
+	);
 
-		closeModal.addEventListener("click", () => modal.classList.remove("show"));
-
-		window.addEventListener("keydown", (e) => {
-			if (e.key === "Escape") modal.classList.remove("show");
-		});
-
-		modal.addEventListener("click", (e) => {
-			if (e.target === modal) modal.classList.remove("show");
-		});
-	}
-
-	setupGitHubProjects();
-	setupNpmPackages();
-
+	// Fun Fact
 	const aboutSection = document.getElementById("about");
-	if (aboutSection) {
-		aboutSection.addEventListener("mouseover", function handler() {
-			aboutSection.innerHTML +=
-				"<p class='fun-fact'>Fun Fact: I built my first full-stack application at the age of 16! 🚀</p>";
-			aboutSection.removeEventListener("mouseover", handler);
-		});
-	}
+	aboutSection?.addEventListener("mouseover", function handler() {
+		aboutSection.innerHTML +=
+			"<p class='fun-fact'>Fun Fact: I built my first full-stack application at the age of 16! 🚀</p>";
+		aboutSection.removeEventListener("mouseover", handler);
+	});
 
-	const githubHeading = document.querySelector("#github-projects h2");
+	// Konami code Easter egg
+	let konamiCode = [];
+	const konamiSequence = [
+		"ArrowUp",
+		"ArrowUp",
+		"ArrowDown",
+		"ArrowDown",
+		"ArrowLeft",
+		"ArrowRight",
+		"ArrowLeft",
+		"ArrowRight",
+		"b",
+		"a",
+	];
+	document.addEventListener("keydown", function (event) {
+		konamiCode.push(event.key);
+		if (konamiCode.length > konamiSequence.length) konamiCode.shift();
+		if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+			showToast("Konami Code Activated! You are a true explorer! 🚀");
+			document.body.style.backgroundColor = "#000";
+			document.body.style.color = "#0f0";
+		}
+	});
 
+	// GitHub Heatmap
 	const calendarWrapper = document.createElement("div");
 	calendarWrapper.className = "github-calendar-wrapper";
-
 	const calendarDiv = document.createElement("div");
 	calendarDiv.className = "calendar";
 	calendarDiv.textContent = "Loading GitHub activity...";
 	calendarWrapper.appendChild(calendarDiv);
 
-	if (githubHeading && githubHeading.parentNode) {
-		githubHeading.parentNode.insertBefore(
-			calendarWrapper,
-			githubHeading.nextSibling
-		);
+	const githubHeading = document.querySelector("#github-projects h2");
+	githubHeading?.parentNode?.insertBefore(
+		calendarWrapper,
+		githubHeading.nextSibling
+	);
 
-		const interval = setInterval(() => {
-			if (typeof GitHubCalendar !== "undefined") {
-				GitHubCalendar(".calendar", "userparth", { responsive: true });
-				clearInterval(interval);
+	const interval = setInterval(() => {
+		if (typeof GitHubCalendar !== "undefined") {
+			GitHubCalendar(".calendar", "userparth", { responsive: true });
+			clearInterval(interval);
+			setTimeout(() => {
+				document
+					.querySelectorAll(".calendar .contrib-column")
+					.forEach((el) => el.remove());
+				const scrollWrapper = document.querySelector(
+					".calendar [style*='overflow-x: auto']"
+				);
+				if (scrollWrapper) scrollWrapper.scrollLeft = scrollWrapper.scrollWidth;
+			}, 20);
+		}
+	}, 10);
 
-				setTimeout(() => {
-					document
-						.querySelectorAll(".calendar .contrib-column")
-						.forEach((el) => el.remove());
-					const scrollWrapper = document.querySelector(
-						".calendar [style*='overflow-x: auto']"
-					);
-					if (scrollWrapper) {
-						scrollWrapper.scrollLeft = scrollWrapper.scrollWidth;
-					}
-				}, 20);
-			}
-		}, 10);
-	}
+	// Lazy load GitHub/NPM
+	lazyLoadSection("#github-projects", setupGitHubProjects);
+	lazyLoadSection("#npm-packages", setupNpmPackages);
+
+	// Console message
+	console.log(
+		"%cYou found a hidden message! 🚀 Want to collaborate? Reach out at userparth@gmail.com!",
+		"color: cyan; font-size: 16px;"
+	);
 });
