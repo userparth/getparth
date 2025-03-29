@@ -16,10 +16,12 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://getparth.com">
     <meta property="og:image" content="profile.jpg">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="https://getparth.com/" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script type="application/ld+json">
@@ -34,6 +36,30 @@
         "https://github.com/userparth"
       ],
       "image": "https://getparth.com/profile.jpg"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What technologies does Parth Sharma specialize in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Parth specializes in full-stack development, AI/ML, scalable microservices, and cloud platforms like AWS and GCP."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I contact Parth Sharma?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can reach him via email at connect@getparth.com or LinkedIn."
+          }
+        }
+      ]
     }
     </script>
 </head>
@@ -65,13 +91,14 @@
         <div class="hero-content">
             <h1 class="hero-title">Parth Sharma</h1>
             <p class="hero-subtitle">Associate Engineering Manager</p>
-            <img id="profile-img" src="profile.jpg" alt="Profile Picture of Parth Sharma" loading="lazy">
+            <img id="profile-img" src="profile.jpg" alt="Profile picture of Parth Sharma" loading="lazy" width="120"
+                height="120">
         </div>
     </header>
 
     <!-- Navbar -->
     <nav class="hero-nav">
-        <ul class="nav-links nav-links">
+        <ul class="nav-links">
             <li><a href="#about" title="About Me" aria-label="About Me">About</a></li>
             <li><a href="#education" title="My Education" aria-label="My Education">Education</a></li>
             <li><a href="#experience" title="Professional Experience"
@@ -85,36 +112,34 @@
         <button id="dark-mode-toggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode">🌙</button>
     </nav>
 
-    <section id="about">
-        <h2>About Me</h2>
+    <section id="about" role="region" aria-labelledby="about-heading">
+        <h2 id="about-heading">About Me</h2>
         <p>Results-driven Associate Engineering Head with 6+ years of experience in full-stack development, team
             leadership, and technical architecture. Expertise in micro-services, AI-powered solutions, and high-scale
             web applications. Adept at mentoring teams, optimizing development processes, and leveraging emerging
             technologies to drive efficiency and growth.</p>
     </section>
 
-    <section id="education">
-        <h2>Education</h2>
+    <section id="education" role="region" aria-labelledby="education-heading">
+        <h2 id="education-heading">Education</h2>
         <ul>
             <li>Master of Computer Applications (MCA) – (GGSIPU) (2014-2017)</li>
             <li>Bachelor of Computer Applications (BCA) – (GGSIPU) (2011-2014)</li>
         </ul>
     </section>
 
-    <section id="experience">
-        <h2>Professional Experience - <span id="experience-counter"></span></h2>
+    <section id="experience" role="region" aria-labelledby="experience-heading">
+        <h2 id="experience-heading">Professional Experience - <span id="experience-counter"></span></h2>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3>HexaHealth (Vianam HealthTech Pvt. Ltd.)</h3>
-                    <span>
-                        <ul>
-                            <li>Associate Engineering Head (Oct 2024 - Present)</li>
-                            <li>Technical Lead Engineer (Oct 2022 - Sept 2024)</li>
-                            <li>Senior Full Stack Engineer (Dec 2021 - Sept 2022)</li>
-                        </ul>
-                    </span>
+                    <ul>
+                        <li>Associate Engineering Head (Oct 2024 - Present)</li>
+                        <li>Technical Lead Engineer (Oct 2022 - Sept 2024)</li>
+                        <li>Senior Full Stack Engineer (Dec 2021 - Sept 2022)</li>
+                    </ul>
                     <p>Developed custom NLP pipelines, trained transformers, and optimized inference workflows using
                         PyTorch and HuggingFace.</p>
                 </div>
@@ -123,11 +148,9 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3>Freelance</h3>
-                    <span>
-                        <ul>
-                            <li>Full-Stack Developer (Jun 2020 - Dec 2021)</li>
-                        </ul>
-                    </span>
+                    <ul>
+                        <li>Full-Stack Developer (Jun 2020 - Dec 2021)</li>
+                    </ul>
                     <p>Built scalable MERN stack applications with real-time chat, role-based access, and responsive
                         UI/UX for 3 clients.</p>
                 </div>
@@ -136,31 +159,33 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h3>ArrayStack Technologies Pvt. Ltd.</h3>
-                    <span>
-                        <ul>
-                            <li>Back-End Developer (Apr 2018 - Apr 2020)</li>
-                            <li>Android Developer (Jul 2017 - Mar 2018)</li>
-                        </ul>
-                    </span>
-                    <p>Graduating with a strong foundation in algorithms, system design, and machine learning. Built
+                    <ul>
+                        <li>Back-End Developer (Apr 2018 - Apr 2020)</li>
+                        <li>Android Developer (Jul 2017 - Mar 2018)</li>
+                    </ul>
+                    <p>Built strong foundations in algorithms, system design, and machine learning. Delivered multiple
                         projects in AI and data analytics.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="github-projects">
-        <h2>GitHub Projects</h2>
+
+    <section id="npm-packages" role="region" aria-labelledby="npm-heading">
+        <h2 id="npm-heading">NPM Packages</h2>
+        <div id="npm-packages-list">Loading NPM packages...</div>
+    </section>
+
+    <section id="github-projects" role="region" aria-labelledby="github-heading">
+        <h2 id="github-heading">GitHub Projects</h2>
         <div id="projects-list">Loading projects...</div>
     </section>
 
-    <section id="resume">
-        <h2>Resume</h2>
+    <section id="resume" role="region" aria-labelledby="resume-heading">
+        <h2 id="resume-heading">Resume</h2>
         <a href="#" class="resume-btn" title="View My Resume" aria-label="Open Resume Viewer">View My Resume</a>
         <a class="resume-btn" href="ParthSharma+9953810127.pdf" download title="Download My Resume as PDF"
-            aria-label="Download My Resume PDF">
-            Download My Resume
-        </a>
+            aria-label="Download My Resume PDF">Download My Resume</a>
     </section>
 
     <footer>
@@ -170,20 +195,19 @@
                 target="_blank">LinkedIn Profile</a></p>
     </footer>
 
-    <script type="text/javascript"
-        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        defer></script>
+    <script defer>
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
         }
 
-        // Dynamic experience counter
         const start = new Date(2017, 6); // July 2017
         const diff = new Date() - start;
         const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
         document.getElementById("experience-counter").innerText = `${years}+ years`;
     </script>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>
