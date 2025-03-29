@@ -1,3 +1,7 @@
+// Force restyle all dynamic cards
+document.querySelectorAll(".github-card").forEach((card) => {
+	card.classList.toggle("dark-card", isDark);
+});
 // =========================
 // TOAST NOTIFICATION
 // =========================
@@ -47,76 +51,43 @@ function setupGitHubProjects() {
 
 	projectsList.classList.add("projects-grid");
 
-	const filterContainer = document.createElement("div");
-	filterContainer.classList.add("filter-container");
-	projectsList.before(filterContainer);
-
-	let allRepos = [];
-
-	function renderProjects(repos, language = "all") {
-		projectsList.innerHTML = "";
-		const filtered =
-			language === "all"
-				? repos
-				: repos.filter((repo) => repo.language === language);
-
-		if (filtered.length === 0) {
-			projectsList.innerHTML = "<p>No projects found.</p>";
-			return;
-		}
-
-		filtered.forEach((repo) => {
-			const card = document.createElement("a");
-			card.href = repo.html_url;
-			card.target = "_blank";
-			card.classList.add("github-card");
-			card.setAttribute("aria-label", repo.name);
-			card.innerHTML = `
-				<h3 style="margin-bottom: 5px; color: #e83e8c;">${repo.name}</h3>
-				<p style="font-size: 14px; color: #555;">${
-					repo.description || "No description provided."
-				}</p>
-				<div style="font-size: 13px; color: #777;">⭐ ${repo.stargazers_count} | 🍴 ${
-				repo.forks_count
-			} | 📅 Updated: ${new Date(repo.updated_at).toLocaleDateString()}</div>
-			`;
-			projectsList.appendChild(card);
-		});
-	}
-
 	fetchData(
 		`https://api.github.com/users/${githubUsername}/repos`,
-		(data) => {
-			allRepos = data;
-			const uniqueLangs = new Set([
-				"All",
-				...data.map((r) => r.language).filter(Boolean),
-			]);
+		(repos) => {
+			projectsList.innerHTML = "";
 
-			uniqueLangs.forEach((lang) => {
-				const btn = document.createElement("button");
-				btn.textContent = `${lang} (${
-					data.filter((r) => r.language === lang).length || data.length
-				})`;
-				btn.classList.add("filter-btn");
-				btn.dataset.lang = lang.toLowerCase();
-
-				btn.addEventListener("click", () => {
-					document
-						.querySelectorAll(".filter-btn")
-						.forEach((b) => b.classList.remove("active"));
-					btn.classList.add("active");
-					renderProjects(allRepos, lang === "All" ? "all" : lang);
-				});
-
-				filterContainer.appendChild(btn);
+			repos.forEach((repo) => {
+				const card = document.createElement("div");
+				card.className = "github-card";
+				card.innerHTML = `
+          <div class="card-header">
+            <span class="type-icon">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub Logo" />
+            </span>
+            <a href="${
+							repo.html_url
+						}" class="external-icon" target="_blank" rel="noopener">
+              <i class="fas fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <div class="project-title">${repo.name}</div>
+          <a class="project-link" href="${repo.html_url}" target="_blank">${
+					repo.html_url
+				}</a>
+          <div class="last-edited">Edited ${new Date(
+						repo.updated_at
+					).toLocaleDateString()}</div>
+          <hr />
+          <div class="button-group">
+            <button class="btn primary-btn">Guide editor</button>
+            <button class="btn secondary-btn">Dashboard</button>
+          </div>
+        `;
+				projectsList.appendChild(card);
 			});
-
-			renderProjects(data);
-			document.querySelector(".filter-btn").classList.add("active");
 		},
 		(error) => {
-			projectsList.innerHTML = "Failed to load projects.";
+			projectsList.innerHTML = "<p>Failed to load GitHub projects.</p>";
 			console.error("GitHub Fetch Error:", error);
 		}
 	);
@@ -130,43 +101,49 @@ function setupNpmPackages() {
 	const npmListContainer = document.getElementById("npm-packages-list");
 	if (!npmListContainer) return;
 
+	npmListContainer.classList.add("projects-grid");
+
 	fetchData(
 		`https://registry.npmjs.org/-/v1/search?text=maintainer:${username}&size=20`,
 		(data) => {
 			const packages = data.objects;
-			if (!packages.length) {
-				npmListContainer.innerHTML = "<p>No packages found.</p>";
-				return;
-			}
-			const list = document.createElement("div");
-			list.classList.add("projects-grid");
+			npmListContainer.innerHTML = "";
 
 			packages.forEach((pkg) => {
-				const card = document.createElement("a");
-				card.href = `https://www.npmjs.com/package/${pkg.package.name}`;
-				card.target = "_blank";
-				card.classList.add("github-card");
-				card.setAttribute("aria-label", pkg.package.name);
+				const card = document.createElement("div");
+				card.className = "github-card";
 				card.innerHTML = `
-					<h3 style="margin-bottom: 5px; color: #e83e8c;">${pkg.package.name}</h3>
-					<p style="font-size: 14px; color: #555;">${
-						pkg.package.description || "No description available."
-					}</p>
-					<div style="font-size: 13px; color: #777;">📦 v${
-						pkg.package.version
-					} | ⏱️ Updated: ${new Date(
-					pkg.package.date
-				).toLocaleDateString()}</div>
-				`;
-				list.appendChild(card);
+          <div class="card-header">
+            <span class="type-icon">
+              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/npm.svg" alt="NPM Logo" />
+            </span>
+            <a href="https://www.npmjs.com/package/${
+							pkg.package.name
+						}" class="external-icon" target="_blank" rel="noopener">
+              <i class="fas fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <div class="project-title">${pkg.package.name}</div>
+          <a class="project-link" href="https://www.npmjs.com/package/${
+						pkg.package.name
+					}" target="_blank">
+            npmjs.com/package/${pkg.package.name}
+          </a>
+          <div class="last-edited">Edited ${new Date(
+						pkg.package.date
+					).toLocaleDateString()}</div>
+          <hr />
+          <div class="button-group">
+            <button class="btn primary-btn">Guide editor</button>
+            <button class="btn secondary-btn">Dashboard</button>
+          </div>
+        `;
+				npmListContainer.appendChild(card);
 			});
-
-			npmListContainer.innerHTML = "";
-			npmListContainer.appendChild(list);
 		},
-		(err) => {
-			npmListContainer.innerHTML = "Failed to load NPM packages.";
-			console.error("NPM Fetch Error:", err);
+		(error) => {
+			npmListContainer.innerHTML = "<p>Failed to load NPM packages.</p>";
+			console.error("NPM Fetch Error:", error);
 		}
 	);
 }
@@ -212,7 +189,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		navLinks?.classList.toggle("show")
 	);
 	document.addEventListener("click", (e) => {
-		if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+		if (
+			menuToggle &&
+			navLinks &&
+			!menuToggle.contains(e.target) &&
+			!navLinks.contains(e.target)
+		) {
 			navLinks.classList.remove("show");
 		}
 	});
@@ -307,4 +289,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		"%cYou found a hidden message! 🚀 Want to collaborate? Reach out at userparth@gmail.com!",
 		"color: cyan; font-size: 16px;"
 	);
+});
+
+document.querySelectorAll(".project-actions button").forEach((btn) => {
+	btn.addEventListener("click", () => {
+		alert("Add your custom action here");
+	});
 });
