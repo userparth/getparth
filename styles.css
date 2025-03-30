@@ -2,7 +2,7 @@
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css");
 body {
-	font-family: "Inter", sans-serif;
+	font-family: "Afacad Flux", sans-serif;
 }
 
 /* Consolidated transition properties */
@@ -11,7 +11,7 @@ body {
 }
 
 body {
-	font-family: "Inconsolata", monospace;
+	font-family: "Afacad Flux", sans-serif;
 	margin: 0;
 	padding: 0;
 	background-color: #f8f9fa;
@@ -28,7 +28,7 @@ h1,
 h2,
 h3 {
 	color: #222;
-	font-family: "Playfair Display", serif;
+	font-family: "Afacad Flux", sans-serif;
 }
 
 p,
@@ -331,6 +331,8 @@ footer {
 body.dark-mode {
 	background-color: #121212;
 	color: #bbb;
+	--text-color: #eee;
+	--subtext-color: #aaa;
 }
 
 body.dark-mode section,
@@ -481,8 +483,7 @@ label[for="lang-filter"] {
 
 /* 🌙 Animated transition for Dark Mode */
 body,
-section,
-.github-card {
+section {
 	transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -746,6 +747,12 @@ section[role="region"] {
 	}
 }
 
+.github-card.dark-card {
+	background: #222 !important;
+	color: white !important;
+	border-color: #444 !important;
+}
+
 /* === Focus Styles for Accessibility === */
 :focus-visible {
 	outline: 2px dashed #007bff;
@@ -768,4 +775,140 @@ body > div[style*="position:fixed"] {
 		opacity: 1;
 		transform: translateY(0);
 	}
+}
+
+.projects-doc-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 20px;
+	margin-top: 30px;
+}
+
+.github-card {
+	background-color: var(--card-bg, #ffffff);
+	color: var(--card-text, #222222);
+	border: 1px solid var(--card-border, #e0e0e0);
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	position: relative;
+	transition: background 0.3s, border 0.3s, color 0.3s;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+body.dark-mode .github-card {
+	--card-bg: #1e1e1e;
+	--card-text: #eaeaea;
+	--card-border: #333333;
+}
+
+/* 🧩 Header with logo and shortcut icon */
+.github-card .card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.github-card .type-icon img {
+	width: 24px;
+	height: 24px;
+	opacity: 0.8;
+}
+
+.github-card .external-icon {
+	font-size: 16px;
+	color: #666666;
+	opacity: 0.5;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.github-card .external-icon:hover {
+	opacity: 1;
+}
+
+/* 📝 Project title and meta info */
+.github-card .project-title {
+	font-size: 16px;
+	font-weight: 600;
+	margin: 8px 0 2px;
+	line-height: 1.4;
+}
+
+.github-card .project-link {
+	font-size: 14px;
+	color: #007bff;
+	text-decoration: none;
+	margin-bottom: 4px;
+	word-break: break-word;
+}
+
+.github-card .project-link:hover {
+	text-decoration: underline;
+}
+
+.github-card .last-edited {
+	font-size: 13px;
+	color: var(--card-muted, #888888);
+	margin-bottom: 8px;
+}
+
+body.dark-mode .github-card .last-edited {
+	--card-muted: #aaaaaa;
+}
+
+/* 🔻 Divider line */
+.github-card hr {
+	border: none;
+	border-top: 1px solid #e5e5e5;
+	margin: 10px 0;
+}
+
+body.dark-mode .github-card hr {
+	border-color: #2c2c2c;
+}
+
+/* 🎯 Buttons */
+.github-card .button-group {
+	display: flex;
+	gap: 10px;
+}
+
+.github-card .btn {
+	font-size: 14px;
+	padding: 6px 14px;
+	cursor: pointer;
+	border: none;
+	transition: all 0.3s ease;
+}
+
+.github-card .primary-btn {
+	background: #007bff;
+	color: #ffffff;
+	border-radius: 20px;
+}
+
+.github-card .primary-btn:hover {
+	background: #0056b3;
+}
+
+.github-card .secondary-btn {
+	background: transparent;
+	color: var(--card-text, #333333);
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+body.dark-mode .github-card .secondary-btn {
+	color: #eeeeee;
+	border-color: #444;
+}
+
+.github-card .secondary-btn:hover {
+	background-color: #f8f9fa;
+}
+
+body.dark-mode .github-card .secondary-btn:hover {
+	background-color: #2a2a2a;
 }
