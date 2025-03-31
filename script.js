@@ -279,7 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			}, 20);
 		}
 	}, 10);
-
 	// Lazy load GitHub/NPM
 	lazyLoadSection("#github-projects", setupGitHubProjects);
 	lazyLoadSection("#npm-packages", setupNpmPackages);
