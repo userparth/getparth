@@ -77,11 +77,11 @@ function setupGitHubProjects() {
           <div class="last-edited">Edited ${new Date(
 						repo.updated_at
 					).toLocaleDateString()}</div>
-          <hr />
+          <!--<hr />
           <div class="button-group">
             <button class="btn primary-btn">Guide editor</button>
             <button class="btn secondary-btn">Dashboard</button>
-          </div>
+          </div>-->
         `;
 				projectsList.appendChild(card);
 			});
@@ -132,11 +132,11 @@ function setupNpmPackages() {
           <div class="last-edited">Edited ${new Date(
 						pkg.package.date
 					).toLocaleDateString()}</div>
-          <hr />
+          <!--<hr />
           <div class="button-group">
             <button class="btn primary-btn">Guide editor</button>
             <button class="btn secondary-btn">Dashboard</button>
-          </div>
+          </div>-->
         `;
 				npmListContainer.appendChild(card);
 			});
@@ -252,11 +252,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// GitHub Heatmap
 	const calendarWrapper = document.createElement("div");
-	calendarWrapper.className = "github-calendar-wrapper";
-	const calendarDiv = document.createElement("div");
-	calendarDiv.className = "calendar";
-	calendarDiv.textContent = "Loading GitHub activity...";
-	calendarWrapper.appendChild(calendarDiv);
+	// calendarWrapper.className = "github-calendar-wrapper";
+	// const calendarDiv = document.createElement("div");
+	// calendarDiv.className = "calendar";
+	// calendarDiv.textContent = "Loading GitHub activity...";
+	// calendarWrapper.appendChild(calendarDiv);
 
 	const githubHeading = document.querySelector("#github-projects h2");
 	githubHeading?.parentNode?.insertBefore(
