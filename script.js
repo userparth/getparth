@@ -165,22 +165,23 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	const darkModeToggle = document.getElementById("dark-mode-toggle");
-	const savedDark = localStorage.getItem("dark-mode") === "enabled";
-	document.body.classList.toggle("dark-mode", savedDark);
-	if (darkModeToggle) {
-		darkModeToggle.textContent = savedDark ? "🌞" : "🌙";
-		darkModeToggle.addEventListener("click", () => {
-			const isDark = document.body.classList.toggle("dark-mode");
-			localStorage.setItem("dark-mode", isDark ? "enabled" : "disabled");
-			darkModeToggle.textContent = isDark ? "🌞" : "🌙";
-			document.querySelectorAll(".github-card").forEach((card) => {
-				card.style.background = isDark ? "#222" : "#f5f5f5";
-				card.style.color = isDark ? "white" : "#333";
-				card.style.borderColor = isDark ? "#444" : "#ccc";
-			});
-		});
+	const darkToggle = document.getElementById("dark-mode-toggle");
+	const html = document.documentElement;
+	const savedTheme = localStorage.getItem("dark-mode");
+
+	if (savedTheme === "enabled") {
+		document.body.classList.add("dark-mode");
+		html.classList.add("dark");
+	} else {
+		document.body.classList.remove("dark-mode");
+		html.classList.remove("dark");
 	}
+
+	darkToggle?.addEventListener("click", () => {
+		const isDark = document.body.classList.toggle("dark-mode");
+		html.classList.toggle("dark", isDark);
+		localStorage.setItem("dark-mode", isDark ? "enabled" : "disabled");
+	});
 
 	// Hamburger toggle
 	const menuToggle = document.getElementById("hamburger-menu");
