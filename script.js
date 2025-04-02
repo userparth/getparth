@@ -1,6 +1,9 @@
 // Force restyle all dynamic cards
 document.querySelectorAll(".github-card").forEach((card) => {
-	card.classList.toggle("dark-card", isDark);
+	//card.classList.toggle("dark-card", isDark);
+	card.style.background = isDark ? "#222" : "#f5f5f5";
+	card.style.color = isDark ? "white" : "#333";
+	card.style.borderColor = isDark ? "#444" : "#ccc";
 });
 // =========================
 // TOAST NOTIFICATION
