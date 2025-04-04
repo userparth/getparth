@@ -109,32 +109,65 @@
         <button class="hamburger" id="hamburger-menu" title="Menu" aria-label="Open Navigation Menu">
             <i class="fas fa-bars"></i>
         </button>
+
         <a id="dark-mode-toggle" class="js-toggle-dark-mode w-6" title="Toggle Dark Mode" aria-label="Toggle Dark Mode">
-            <svg class="block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
-                <path clip-rule="evenodd"
-                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                    fill-rule="evenodd"></path>
+            <svg class="light-icon" fill="currentColor" viewBox="0 0 20 20">
+                <!-- sun -->
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
             </svg>
-            <svg class="hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+            <svg class="dark-icon" fill="currentColor" viewBox="0 0 20 20">
+                <!-- moon -->
                 <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
             </svg>
         </a>
     </nav>
 
-    <section id="about" role="region" aria-labelledby="about-heading">
-        <h2 id="about-heading">About Me</h2>
-        <p>Results-driven Associate Engineering Head with 6+ years of experience in full-stack development, team
-            leadership, and technical architecture. Expertise in micro-services, AI-powered solutions, and high-scale
-            web applications. Adept at mentoring teams, optimizing development processes, and leveraging emerging
-            technologies to drive efficiency and growth.</p>
-    </section>
+    <div class="container">
+        <div class="grid-features">
+            <div class="bento-card div1">
+                <div class="bento-card-description">
+                    <h2>Cloud Solutions</h2>
+                    <p>Use a pre-designed template or personalize with video, stickers, fonts, and more</p>
+                </div>
+            </div><!-- .bento-card.cloud -->
+            <div class="bento-card div2">
+                <div class="bento-card-description">
+                    <h2>Impact The Environment</h2>
+                    <p>We built smart solutions for you and the children of tomorrow. All your data will be stored
+                        on smart storage</p>
+                </div>
+                <div class="bento-card-details">
+                </div>
+            </div><!-- .bento-card.logo -->
+            <div class="bento-card device div3">
+                <div class="bento-card-description">
+
+                </div>
+            </div>
+            <div class="bento-card div4">
+                <div class="bento-card-description">
+                    <h3>Inbox</h3>
+                    <p>Track your gifts, group chats, and sent cards</p>
+                </div>
+                <div class="bento-card-details div4">
+
+                </div>
+            </div>
+            <div class="bento-card div5">
+            </div>
+            <div class="bento-card div6">
+                <div class="bento-card-description">
+                    <h2>AI Generates Your Route</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <section id="education" role="region" aria-labelledby="education-heading">
         <h2 id="education-heading">Education</h2>
-        <ul>
-            <li>Master of Computer Applications (MCA) – (GGSIPU) (2014-2017)</li>
-            <li>Bachelor of Computer Applications (BCA) – (GGSIPU) (2011-2014)</li>
-        </ul>
+
     </section>
 
     <section id="experience" role="region" aria-labelledby="experience-heading">
