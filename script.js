@@ -168,22 +168,35 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	const darkToggle = document.getElementById("dark-mode-toggle");
 	const html = document.documentElement;
+	const body = document.body;
+	const darkToggle = document.getElementById("dark-mode-toggle");
+
+	// Theme Load State
 	const savedTheme = localStorage.getItem("dark-mode");
-
-	if (savedTheme === "enabled") {
-		document.body.classList.add("dark-mode");
+	const enableDark = () => {
+		body.classList.add("dark-mode");
 		html.classList.add("dark");
-	} else {
-		document.body.classList.remove("dark-mode");
+		localStorage.setItem("dark-mode", "enabled");
+	};
+	const disableDark = () => {
+		body.classList.remove("dark-mode");
 		html.classList.remove("dark");
-	}
+		localStorage.setItem("dark-mode", "disabled");
+	};
+	if (savedTheme === "enabled") enableDark();
 
-	darkToggle?.addEventListener("click", () => {
-		const isDark = document.body.classList.toggle("dark-mode");
-		html.classList.toggle("dark", isDark);
-		localStorage.setItem("dark-mode", isDark ? "enabled" : "disabled");
+	// Toggle Button
+	darkToggle?.addEventListener("click", () =>
+		body.classList.contains("dark-mode") ? disableDark() : enableDark()
+	);
+
+	// Keyboard Shortcut: Ctrl+J
+	document.addEventListener("keydown", (e) => {
+		if (e.key.toLowerCase() === "d") {
+			e.preventDefault();
+			body.classList.contains("dark-mode") ? disableDark() : enableDark();
+		}
 	});
 
 	// Hamburger toggle
