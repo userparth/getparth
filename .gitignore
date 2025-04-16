@@ -1,3 +1,20 @@
+# Environment
+.env
+.venv/
+venv/
+env/
+newdesign/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Assets
+assets/
+
+
 *.pdf
 *.jpg
 .DS_Store
+bento.html
