@@ -2,28 +2,43 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Portfolio - Parth Sharma | Associate Engineering Head</title>
+
+    <!-- Meta SEO -->
     <meta name="description"
-        content="Parth Sharma - Associate Engineering Head with expertise in full-stack development, AI-powered solutions, microservices, and high-scale web applications.">
+        content="Parth Sharma - Associate Engineering Head with expertise in full-stack development, AI-powered solutions, microservices, and high-scale web applications." />
     <meta name="keywords"
-        content="Parth Sharma, Associate Engineering Head, Full-Stack Developer, AI Solutions, Microservices, Software Engineering">
-    <meta name="author" content="Parth Sharma">
-    <meta property="og:title" content="Portfolio - Parth Sharma | Associate Engineering Head">
-    <meta property="og:description"
-        content="Experienced Associate Engineering Head specializing in full-stack development, AI-powered solutions, and scalable web applications.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://getparth.com">
-    <meta property="og:image" content="profile.jpg">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
+        content="Parth Sharma, Associate Engineering Head, Full-Stack Developer, AI Solutions, Microservices, Software Engineering" />
+    <meta name="author" content="Parth Sharma" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
     <link rel="canonical" href="https://getparth.com/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Portfolio - Parth Sharma | Associate Engineering Head" />
+    <meta property="og:description"
+        content="Experienced Associate Engineering Head specializing in full-stack development, AI-powered solutions, and scalable web applications." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://getparth.com" />
+    <meta property="og:image" content="profile.jpg" />
+
+    <!-- Font Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet" />
+
+    <!-- Preload LCP Image -->
+    <link rel="preload" as="image" href="profile.jpg" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -64,6 +79,7 @@
     </script>
 </head>
 
+
 <body>
     <!-- Resume Modal -->
     <div id="resume-modal" class="modal-overlay">
@@ -76,6 +92,32 @@
 
     <!-- Hero Section with Dots Background -->
     <header class="hero-section">
+        <!-- Animated Background Dots -->
+        <div class="hero-scene">
+            <div class="ct-container">
+                <span class="item-1">
+                    <img src="./assets/dots-title-left.svg" alt="dots-left" />
+                </span>
+                <span class="item-2">
+                    <img src="./assets/circle-dots-big.svg" alt="dots-right" />
+                </span>
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-inner">
+            <img src="./assets/profile.jpg" alt="Parth Sharma" class="hero-avatar" width="130" height="130"
+                loading="lazy" />
+            <h1 class="hero-title animate-fade-up">Parth Sharma</h1>
+            <p class="hero-subtitle animate-fade-up delay-1">Associate Engineering Head</p>
+            <p class="hero-tagline animate-fade-up delay-2">Crafting AI systems, microservices, and full-stack magic</p>
+
+            <!-- Scroll-down Indicator -->
+            <div class="scroll-down"><span></span></div>
+        </div>
+    </header>
+
+    <!-- <header class="hero-section">
         <div class="hero-scene">
             <div class="ct-container">
                 <span class="item-1">
@@ -92,10 +134,10 @@
             <img id="profile-img" src="./assets/profile.jpg" alt="Profile picture of Parth Sharma" loading="lazy"
                 width="120" height="120">
         </div>
-    </header>
+    </header> -->
 
     <!-- Navbar -->
-    <nav class="hero-nav">
+    <nav id="main-nav" class="hero-nav scroll-follow">
         <ul class="nav-links">
             <li><a href="#about" title="About Me" aria-label="About Me">About</a></li>
             <li><a href="#education" title="My Education" aria-label="My Education">Education</a></li>
@@ -104,7 +146,8 @@
             <li><a href="#github-projects" title="GitHub Projects" aria-label="GitHub Projects">Projects</a></li>
             <li><a href="#resume" title="Resume" aria-label="Download Resume">Resume</a></li>
         </ul>
-        <button class="hamburger" id="hamburger-menu" title="Menu" aria-label="Open Navigation Menu">
+        <button class="hamburger" id="hamburger-menu" title="Menu" aria-label="Open Navigation Menu"
+            aria-expanded="false" aria-controls="main-nav">
             <i class="fas fa-bars"></i>
         </button>
 

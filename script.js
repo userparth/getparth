@@ -306,6 +306,29 @@ document.addEventListener("DOMContentLoaded", () => {
 		"%cYou found a hidden message! 🚀 Want to collaborate? Reach out at userparth@gmail.com!",
 		"color: cyan; font-size: 16px;"
 	);
+
+	const nav = document.getElementById("main-nav");
+
+	// Create a marker right above the navbar
+	const marker = document.createElement("div");
+	marker.style.position = "absolute";
+	marker.style.top = `${nav.offsetTop}px`;
+	marker.style.height = "1px";
+	marker.id = "nav-trigger";
+	nav.parentNode.insertBefore(marker, nav);
+
+	const observer = new IntersectionObserver(
+		([entry]) => {
+			if (!entry.isIntersecting) {
+				nav.classList.add("sticky");
+			} else {
+				nav.classList.remove("sticky");
+			}
+		},
+		{ threshold: [0] }
+	);
+
+	observer.observe(document.getElementById("nav-trigger"));
 });
 
 document.querySelectorAll(".project-actions button").forEach((btn) => {
