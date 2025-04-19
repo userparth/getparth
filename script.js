@@ -155,6 +155,8 @@ function setupNpmPackages() {
 // RESUME MODAL & UI EVENTS
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
+	const checkbox = document.getElementById("checkbox");
+
 	document.querySelectorAll("section").forEach((el, i) => {
 		el.classList.add("fade-in-up");
 		el.style.animationDelay = `${i * 0.2}s`;
@@ -170,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const html = document.documentElement;
 	const body = document.body;
-	const darkToggle = document.getElementById("dark-mode-toggle");
 
 	// Theme Load State
 	const savedTheme = localStorage.getItem("dark-mode");
@@ -187,15 +188,33 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (savedTheme === "enabled") enableDark();
 
 	// Toggle Button
-	darkToggle?.addEventListener("click", () =>
-		body.classList.contains("dark-mode") ? disableDark() : enableDark()
-	);
+	if (savedTheme === "enabled") {
+		enableDark();
+		checkbox.checked = true;
+	} else {
+		checkbox.checked = false;
+	}
+
+	checkbox.addEventListener("change", () => {
+		if (checkbox.checked) {
+			enableDark();
+		} else {
+			disableDark();
+		}
+	});
 
 	// Keyboard Shortcut: Ctrl+J
 	document.addEventListener("keydown", (e) => {
 		if (e.key.toLowerCase() === "d") {
 			e.preventDefault();
-			body.classList.contains("dark-mode") ? disableDark() : enableDark();
+			const isDark = body.classList.contains("dark-mode");
+			if (isDark) {
+				disableDark();
+				checkbox.checked = false;
+			} else {
+				enableDark();
+				checkbox.checked = true;
+			}
 		}
 	});
 
