@@ -63,28 +63,30 @@ function setupGitHubProjects() {
 				const card = document.createElement("div");
 				card.className = "github-card";
 				card.innerHTML = `
-          <div class="card-header">
-            <span class="type-icon">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub Logo" />
-            </span>
-            <a href="${
-							repo.html_url
-						}" class="external-icon" target="_blank" rel="noopener">
-              <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-          </div>
-          <div class="project-title">${repo.name}</div>
-          <a class="project-link" href="${repo.html_url}" target="_blank">${
+				<div class="card-header">
+					<span class="type-icon">
+					<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub Logo" class="gh-icon" />
+					</span>
+					<div class="card-title-group">
+					<div class="project-title">${repo.name}</div>
+					<a href="${
+						repo.html_url
+					}" class="external-icon" target="_blank" rel="noopener" aria-label="Open on GitHub">
+						<i class="fas fa-arrow-up-right-from-square"></i>
+					</a>
+					</div>
+				</div>
+				<a class="project-link" href="${repo.html_url}" target="_blank">${
 					repo.html_url
 				}</a>
-          <div class="last-edited">Edited ${new Date(
-						repo.updated_at
-					).toLocaleDateString()}</div>
-          <!--<hr />
-          <div class="button-group">
-            <button class="btn primary-btn">Guide editor</button>
-            <button class="btn secondary-btn">Dashboard</button>
-          </div>-->
+				<div class="last-edited">Edited ${new Date(
+					repo.updated_at
+				).toLocaleDateString()}</div>
+					<!--<hr />
+					<div class="button-group">
+					<button class="btn primary-btn">Guide editor</button>
+					<button class="btn secondary-btn">Dashboard</button>
+					</div>-->
         `;
 				projectsList.appendChild(card);
 			});
@@ -115,32 +117,25 @@ function setupNpmPackages() {
 			packages.forEach((pkg) => {
 				const card = document.createElement("div");
 				card.className = "github-card";
+
+				const name = pkg.package.name;
+				const url = `https://www.npmjs.com/package/${name}`;
+				const lastUpdated = new Date(pkg.package.date).toLocaleDateString();
 				card.innerHTML = `
-          <div class="card-header">
-            <span class="type-icon">
-              <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/npm.svg" alt="NPM Logo" />
-            </span>
-            <a href="https://www.npmjs.com/package/${
-							pkg.package.name
-						}" class="external-icon" target="_blank" rel="noopener">
-              <i class="fas fa-arrow-up-right-from-square"></i>
-            </a>
-          </div>
-          <div class="project-title">${pkg.package.name}</div>
-          <a class="project-link" href="https://www.npmjs.com/package/${
-						pkg.package.name
-					}" target="_blank">
-            npmjs.com/package/${pkg.package.name}
-          </a>
-          <div class="last-edited">Edited ${new Date(
-						pkg.package.date
-					).toLocaleDateString()}</div>
-          <!--<hr />
-          <div class="button-group">
-            <button class="btn primary-btn">Guide editor</button>
-            <button class="btn secondary-btn">Dashboard</button>
-          </div>-->
-        `;
+					<div class="card-header">
+						<span class="type-icon">
+							<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/npm.svg" alt="NPM Logo" class="gh-icon" />
+						</span>
+						<div class="card-title-group">
+							<div class="project-title">${name}</div>
+							<a href="${url}" class="external-icon" target="_blank" rel="noopener" aria-label="Open on NPM">
+								<i class="fas fa-arrow-up-right-from-square"></i>
+							</a>
+						</div>
+					</div>
+					<a class="project-link" href="${url}" target="_blank">${url}</a>
+					<div class="last-edited">Last updated ${lastUpdated}</div>
+				`;
 				npmListContainer.appendChild(card);
 			});
 		},
