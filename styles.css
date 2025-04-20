@@ -297,9 +297,144 @@ body.dark-mode .hamburger i {
 }
 
 /* === SECTION CARD CONTAINERS === */
+.section-grid-layout {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 0.5fr 1.5fr 0.5fr 0.5fr;
+	grid-template-areas:
+		"about about experience experience"
+		"blogs blogs experience experience"
+		"github github education education"
+		"npm npm resume resume";
+	gap: 32px;
+	padding: 60px 40px;
+	margin: auto;
+}
+
+.area-about {
+	grid-area: about;
+}
+.area-experience {
+	grid-area: experience;
+}
+.area-blogs {
+	grid-area: blogs;
+}
+.area-npm {
+	grid-area: npm;
+}
+.area-education {
+	grid-area: education;
+}
+.area-github {
+	grid-area: github;
+}
+.area-resume {
+	grid-area: resume;
+}
+
+@media (max-width: 1024px) {
+	.section-grid-layout {
+		grid-template-columns: 1fr 1fr;
+		grid-template-areas:
+			"about about"
+			"experience experience"
+			"blogs blogs"
+			"npm npm"
+			"education education"
+			"github github"
+			"resume resume";
+	}
+}
+
+@media (max-width: 640px) {
+	.hero-section {
+		min-height: 100vh;
+		padding: 40px 20px;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.hero-avatar {
+		width: 100px;
+		height: 100px;
+	}
+
+	.hero-title {
+		font-size: 28px;
+	}
+
+	.hero-subtitle {
+		font-size: 16px;
+	}
+
+	.hero-tagline {
+		font-size: 13px;
+	}
+
+	.scroll-down {
+		margin-top: 24px;
+	}
+
+	.scroll-container {
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.projects-scroll {
+		flex-direction: column;
+		flex-wrap: nowrap;
+		overflow-x: visible;
+		gap: 16px;
+	}
+
+	.projects-scroll > .github-card {
+		min-width: auto;
+		width: 100%;
+	}
+
+	.scroll-btn {
+		display: none; /* Hide arrows on mobile */
+	}
+	.scroll-btn.right {
+		display: none; /* Hide arrows on mobile */
+	}
+	.scroll-btn.left {
+		display: none; /* Hide arrows on mobile */
+	}
+
+	.section-grid-layout {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		padding: 16px;
+	}
+
+	.section-card {
+		padding: 20px;
+	}
+}
+
+.section-card {
+	padding: 24px;
+	background: white;
+	border-radius: 20px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+	transition: transform 0.3s ease;
+}
+
+.section-card:hover {
+	transform: translateY(-6px);
+}
+
+body.dark-mode .section-card {
+	background: #1a1a1a;
+	border: 1px solid #333;
+}
+
 section {
 	padding: 40px;
-	margin: 40px auto;
+	/* margin: 40px auto; */
 	border-radius: 16px;
 	max-width: 900px;
 	background: white;
@@ -407,11 +542,67 @@ body.dark-mode .timeline-block {
 }
 
 /* === PROJECT CARDS === */
-.projects-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-	gap: 20px;
-	padding: 10px 0;
+.projects-scroll {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	gap: 24px;
+	padding-bottom: 12px;
+}
+
+.projects-scroll::-webkit-scrollbar {
+	display: none;
+}
+
+.projects-scroll > .github-card {
+	min-width: 300px;
+	scroll-snap-align: start;
+	flex-shrink: 0;
+}
+.scroll-container {
+	position: relative;
+	width: 100%;
+}
+
+.scroll-btn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	border: none;
+	background: white;
+	color: #333;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	transition: background 0.3s ease, transform 0.2s ease;
+	padding: 0;
+	line-height: 0;
+}
+
+.scroll-btn.left {
+	left: -24px;
+}
+.scroll-btn.right {
+	right: -24px;
+}
+
+.scroll-btn:hover {
+	background: #f1f1f1;
+	transform: translateY(-50%) scale(1.05);
+}
+
+body.dark-mode .scroll-btn {
+	background: #1a1a1a;
+	color: white;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .github-card {
@@ -635,14 +826,15 @@ footer a {
 }
 
 /* === BENTO-GRID === */
-.bento-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.bento-inline {
+	display: flex;
 	gap: 24px;
+	flex-wrap: nowrap;
 	margin-top: 24px;
-	opacity: 0;
-	transform: translateY(20px);
-	animation: fadeSlideUp 0.6s ease-out forwards;
+}
+
+.bento-inline .bento-card {
+	flex: 1 1 300px; /* Minimum 300px width and grow */
 }
 
 .bento-card:nth-child(1) {

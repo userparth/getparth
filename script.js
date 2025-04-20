@@ -25,7 +25,7 @@ function lazyLoadSection(selector, callback) {
 	if (!target) return;
 	const observer = new IntersectionObserver((entries, observer) => {
 		entries.forEach((entry) => {
-			if (entry.isIntersecting) {
+			if (entry.isIntersecting || window.innerWidth < 640) {
 				callback();
 				observer.disconnect();
 			}
@@ -42,6 +42,26 @@ function fetchData(url, onSuccess, onError) {
 		.then((res) => res.json())
 		.then(onSuccess)
 		.catch(onError);
+}
+
+// =========================
+// ScrollButtons PROJECTS
+// =========================
+function setupScrollButtons(containerId) {
+	const container = document.getElementById(containerId);
+	if (!container || window.innerWidth < 640) return;
+
+	const scrollWrapper = container.parentElement;
+	const leftBtn = scrollWrapper.querySelector(".scroll-btn.left");
+	const rightBtn = scrollWrapper.querySelector(".scroll-btn.right");
+
+	leftBtn?.addEventListener("click", () => {
+		container.scrollBy({ left: -300, behavior: "smooth" });
+	});
+
+	rightBtn?.addEventListener("click", () => {
+		container.scrollBy({ left: 300, behavior: "smooth" });
+	});
 }
 
 // =========================
@@ -312,8 +332,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	}, 10);
 
 	// Lazy load GitHub/NPM
-	lazyLoadSection("#github-projects", setupGitHubProjects);
-	lazyLoadSection("#npm-packages", setupNpmPackages);
+	lazyLoadSection("#github-projects", () => {
+		setupGitHubProjects();
+		setupScrollButtons("projects-list");
+	});
+
+	lazyLoadSection("#npm-packages", () => {
+		setupNpmPackages();
+		setupScrollButtons("npm-packages-list");
+	});
 
 	// Console message
 	console.log(
