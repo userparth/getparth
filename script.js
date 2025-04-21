@@ -55,6 +55,25 @@ function setupScrollButtons(containerId) {
 	const leftBtn = scrollWrapper.querySelector(".scroll-btn.left");
 	const rightBtn = scrollWrapper.querySelector(".scroll-btn.right");
 
+	const updateButtonVisibility = () => {
+		const scrollLeft = container.scrollLeft;
+		const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+		const totalCards = container.children.length;
+
+		if (totalCards <= 1) {
+			leftBtn.style.display = "none";
+			rightBtn.style.display = "none";
+			return;
+		}
+
+		leftBtn.style.display = scrollLeft > 10 ? "flex" : "none";
+		rightBtn.style.display = scrollLeft < maxScrollLeft - 10 ? "flex" : "none";
+	};
+
+	setTimeout(updateButtonVisibility, 100);
+	container.addEventListener("scroll", updateButtonVisibility);
+
 	leftBtn?.addEventListener("click", () => {
 		container.scrollBy({ left: -300, behavior: "smooth" });
 	});
@@ -167,9 +186,95 @@ function setupNpmPackages() {
 }
 
 // =========================
+// MEDIUM BLOGS
+// =========================
+function setupMediumBlogs() {
+	const mediumUsername = "getparth"; // Replace with your Medium username
+	const blogList = document.getElementById("blogs-list");
+
+	// Proxy: Medium doesn't offer public API, so we fetch via RSS to JSON API
+	const feedUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${mediumUsername}`;
+
+	fetchData(
+		feedUrl,
+		(data) => {
+			if (!data.items || data.items.length === 0) {
+				blogList.innerHTML = "<p>No blog posts found.</p>";
+				return;
+			}
+			blogList.innerHTML = "";
+
+			data.items.slice(0, 6).forEach((post) => {
+				const card = document.createElement("div");
+				card.className = "github-card";
+
+				const match = post.description.match(/<img[^>]+src="([^">]+)"/i);
+				const image = match
+					? match[1]
+					: "https://cdn-icons-png.flaticon.com/512/5968/5968906.png";
+
+				const snippet =
+					post.description
+						.replace(/<[^>]*>?/gm, "")
+						.replace(/\s+/g, " ")
+						.trim()
+						.slice(0, 120) + "...";
+
+				const tags = post.categories
+					.slice(0, 4) // limit to 4 tags
+					.map((tag) => `<span>${tag}</span>`)
+					.join("");
+
+				card.innerHTML = `
+						<div class="card-header">
+							<span class="type-icon">
+								<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg" alt="Medium Logo" class="gh-icon" />
+							</span>
+							<div class="card-title-group">
+								<div class="project-title">${post.title}</div>
+								<a href="${
+									post.link
+								}" class="external-icon" target="_blank" rel="noopener" aria-label="Read blog">
+									<i class="fas fa-arrow-up-right-from-square"></i>
+								</a>
+							</div>
+						</div>
+						<img src="${image}" alt="${post.title}" class="blog-thumbnail" loading="lazy" />
+						<p>${snippet}</p>
+						<div class="last-edited">Published ${new Date(
+							post.pubDate
+						).toLocaleDateString()}</div>
+						<div class="stack-tags">${tags}</div>
+				`;
+				blogList.appendChild(card);
+			});
+		},
+		(error) => {
+			blogList.innerHTML = "<p>Failed to load blogs.</p>";
+			console.error("Blog Fetch Error:", error);
+		}
+	);
+}
+
+// =========================
 // RESUME MODAL & UI EVENTS
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
+	// Lazy load GitHub/NPM/Medium
+	lazyLoadSection("#github-projects", () => {
+		setupGitHubProjects();
+		setupScrollButtons("projects-list");
+	});
+
+	lazyLoadSection("#npm-packages", () => {
+		setupNpmPackages();
+		setupScrollButtons("npm-packages-list");
+	});
+
+	lazyLoadSection("#blogs", () => {
+		setupMediumBlogs();
+		setupScrollButtons("blogs-list");
+	});
 	const checkbox = document.getElementById("checkbox");
 
 	document.querySelectorAll("section").forEach((el, i) => {
@@ -330,17 +435,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			}, 20);
 		}
 	}, 10);
-
-	// Lazy load GitHub/NPM
-	lazyLoadSection("#github-projects", () => {
-		setupGitHubProjects();
-		setupScrollButtons("projects-list");
-	});
-
-	lazyLoadSection("#npm-packages", () => {
-		setupNpmPackages();
-		setupScrollButtons("npm-packages-list");
-	});
 
 	// Console message
 	console.log(
