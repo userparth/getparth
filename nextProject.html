@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HireMap</title>
+
+    <!-- Tailwind CDN (Development Only) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Optional: Customize theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#177EF3',
+                        accent: '#E54E0A',
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body>
+    <!-- Your Tailwind-styled HTML goes here -->
+</body>
+<section class="bg-white py-20 px-6 md:px-16">
+    <!-- Hero Layout -->
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-10 md:space-y-0">
+        <!-- Left: Headline & CTA -->
+        <div class="max-w-xl space-y-6">
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-[#177EF3]">
+                Map Your Skills. <br />
+                <span class="text-[#E54E0A]">Land Your Role.</span>
+            </h1>
+            <p class="text-lg text-gray-700">
+                AI assistant to analyze your resume, uncover skill gaps, and match you to AI-powered jobs.
+            </p>
+            <div class="flex space-x-4">
+                <button class="bg-[#177EF3] text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
+                    Upload Resume
+                </button>
+                <button class="text-[#177EF3] font-medium hover:underline">
+                    Try Demo Resume
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Suggested Role Card -->
+        <div class="bg-gray-100 border border-gray-300 p-6 rounded-xl shadow-md w-full md:w-[350px]">
+            <div class="text-sm text-[#E54E0A] font-semibold mb-2">Suggested Role</div>
+            <div class="text-xl font-bold text-gray-800">GenAI API Specialist</div>
+            <p class="text-sm text-gray-500 mt-1">Based on your Java + SpringBoot experience</p>
+        </div>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Feature Card -->
+        <div class="bg-[#E8EEF1] p-6 rounded-2xl shadow-sm text-center">
+            <div class="text-3xl mb-3">🧭</div>
+            <h3 class="font-bold text-lg mb-1">Role Mapping</h3>
+            <p class="text-sm text-gray-600">Discover AI-aligned roles based on your stack.</p>
+        </div>
+
+        <div class="bg-[#E8EEF1] p-6 rounded-2xl shadow-sm text-center">
+            <div class="text-3xl mb-3">📈</div>
+            <h3 class="font-bold text-lg mb-1">Skill Map</h3>
+            <p class="text-sm text-gray-600">Bridge gaps with personalized learning paths.</p>
+        </div>
+
+        <div class="bg-[#E8EEF1] p-6 rounded-2xl shadow-sm text-center">
+            <div class="text-3xl mb-3">🛠️</div>
+            <h3 class="font-bold text-lg mb-1">1-Click Projects</h3>
+            <p class="text-sm text-gray-600">Build AI projects tailored to your journey.</p>
+        </div>
+
+        <div class="bg-[#E8EEF1] p-6 rounded-2xl shadow-sm text-center">
+            <div class="text-3xl mb-3">✍️</div>
+            <h3 class="font-bold text-lg mb-1">Resume Refactor</h3>
+            <p class="text-sm text-gray-600">Rewrite your resume with modern AI language.</p>
+        </div>
+    </div>
+</section>
+
+</html>
