@@ -1,4 +1,4 @@
-# 🚀 Parth Sharma – Portfolio Website
+# 🚀 – Portfolio Website
 
 Welcome to the source of my personal portfolio, hosted at [getparth.com](https://getparth.com). This minimalist, responsive website showcases my professional journey, open-source projects, NPM packages, technical blogs, and more — built with performance, accessibility, and dark mode support in mind.
 
